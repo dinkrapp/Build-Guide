@@ -1,3 +1,5 @@
+
+[DINKR-FEEDBACK-README.md](https://github.com/user-attachments/files/24926921/DINKR-FEEDBACK-README.md)
 # DiNKR Customer Journey - Feedback Document
 
 [![Try Website](https://img.shields.io/badge/Try%20It-Website-294C6B?style=for-the-badge)](https://ghost081280.github.io/dinkr/website/)
@@ -37,7 +39,7 @@
 
 ## Section 3: Deployment Architecture
 
-### 3.1 Flow 1 - Website & Web App (Browser-Based)
+### 3.1 Hosting Options Comparison (Azure vs Railway)
 
 **Feedback / Questions / Changes:**
 ```
@@ -49,7 +51,18 @@
 
 ```
 
-### 3.2 Flow 2 - iOS & Android Mobile Apps (App Store Distribution)
+**Which hosting option do you prefer?**
+```
+[ ] Option A: Azure (enterprise, complex)
+[ ] Option B: Railway (simple, startup-friendly)
+[ ] Need more information to decide
+```
+
+---
+
+## OPTION A: Azure
+
+### 3.2 Flow 1A - Website & Web App (Azure)
 
 **Feedback / Questions / Changes:**
 ```
@@ -61,7 +74,7 @@
 
 ```
 
-### 3.3 Flow 3 - Watch Apps (Native)
+### 3.3 Azure Resources Required
 
 **Feedback / Questions / Changes:**
 ```
@@ -73,7 +86,11 @@
 
 ```
 
-### 3.4 Typical Update Workflow (Feature Release)
+---
+
+## OPTION B: Railway
+
+### 3.4 Flow 1B - Website & Web App (Railway)
 
 **Feedback / Questions / Changes:**
 ```
@@ -85,7 +102,47 @@
 
 ```
 
-### 3.5 Azure Resources Required
+### 3.5 Railway Setup & Resources
+
+**Feedback / Questions / Changes:**
+```
+1. 
+
+2. 
+
+3. 
+
+```
+
+---
+
+## Mobile Apps (Works with Azure OR Railway)
+
+### 3.6 Flow 2 - iOS & Android Mobile Apps (GitHub Actions + Fastlane)
+
+**Feedback / Questions / Changes:**
+```
+1. 
+
+2. 
+
+3. 
+
+```
+
+### 3.7 Flow 3 - Watch Apps (Native)
+
+**Feedback / Questions / Changes:**
+```
+1. 
+
+2. 
+
+3. 
+
+```
+
+### 3.8 Typical Update Workflow (Feature Release)
 
 **Feedback / Questions / Changes:**
 ```
@@ -157,6 +214,29 @@
 
 3. 
 
+```
+
+**Active Play Screen Feedback:**
+
+*This is the live scoring screen during game play with court layout and player positions*
+
+```
+1. 
+
+2. 
+
+3. 
+
+```
+
+**Additional Play Screen Features Needed?**
+```
+[ ] Rally counter
+[ ] Timeout button
+[ ] Serve indicator
+[ ] Side-out tracking
+[ ] Watch app sync
+[ ] Other: ________________
 ```
 
 **Profile Page Feedback:**
