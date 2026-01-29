@@ -1,5 +1,8 @@
 # DiNKR Customer Journey - Feedback Document
 
+[![Try Website](https://img.shields.io/badge/Try%20It-Website-294C6B?style=for-the-badge)](https://ghost081280.github.io/dinkr/website/)
+[![Try Web App](https://img.shields.io/badge/Try%20It-Web%20App-D6FF00?style=for-the-badge&logoColor=black)](https://ghost081280.github.io/dinkr/)
+
 > **Instructions:** Review each section of the Customer Journey document and add your feedback, questions, or requested changes below. Save this file and share with Andrew at andrew@ghost081280.com
 
 ---
