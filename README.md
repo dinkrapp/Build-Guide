@@ -873,7 +873,7 @@
 
 ## Section 11: Server Folder Structure
 
-### 11.1 Azure App Service Structure
+### OPTION A: Azure App Service Structure
 
 **Feedback / Questions / Changes:**
 ```
@@ -885,7 +885,45 @@
 
 ```
 
-### 11.2 Nginx/IIS Routing
+### 11.2 Azure Nginx/IIS Routing
+
+**Feedback / Questions / Changes:**
+```
+1. 
+
+2. 
+
+3. 
+
+```
+
+---
+
+### OPTION B: Railway Structure
+
+**Feedback / Questions / Changes:**
+```
+1. 
+
+2. 
+
+3. 
+
+```
+
+### 11.3 Railway Domain Configuration
+
+**Feedback / Questions / Changes:**
+```
+1. 
+
+2. 
+
+3. 
+
+```
+
+### 11.4 Railway Environment Variables
 
 **Feedback / Questions / Changes:**
 ```

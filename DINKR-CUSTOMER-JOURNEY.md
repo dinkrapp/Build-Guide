@@ -1729,7 +1729,7 @@ end
 
 ## 11. Server Folder Structure
 
-### 11.1 Azure App Service Structure
+### OPTION A: Azure App Service Structure
 
 ```
 /home/site/wwwroot/
@@ -1772,7 +1772,7 @@ end
     └── config/
 ```
 
-### 11.2 Nginx/IIS Routing
+### 11.2 Azure Nginx/IIS Routing
 
 ```
 # dinkr.co routing
@@ -1792,6 +1792,100 @@ end
 /webapp/*           → /webapp/index.html (SPA fallback)
 
 /api/*              → proxy to api.dinkr.co
+```
+
+---
+
+### OPTION B: Railway Structure
+
+Railway deploys each service as a **separate container**. No shared folder structure - each repo is its own service.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         RAILWAY DASHBOARD                                │
+│                                                                          │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐         │
+│  │  dinkr-website  │  │  dinkr-webapp   │  │   dinkr-api     │         │
+│  │  (Service 1)    │  │  (Service 2)    │  │  (Service 3)    │         │
+│  │                 │  │                 │  │                 │         │
+│  │  dinkr.co       │  │ app.dinkr.co    │  │ api.dinkr.co    │         │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘         │
+│                                                                          │
+│  ┌─────────────────┐                                                    │
+│  │   PostgreSQL    │                                                    │
+│  │  (Database)     │                                                    │
+│  │                 │                                                    │
+│  │ Internal access │                                                    │
+│  └─────────────────┘                                                    │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+**Each Service Contains:**
+
+```
+dinkr-website/              # Deployed as its own container
+├── build/                  # Railway runs `npm run build`
+│   ├── index.html
+│   ├── about.html
+│   ├── features.html
+│   └── ...
+├── package.json
+└── railway.json            # Optional Railway config
+
+dinkr-webapp/               # Deployed as its own container
+├── build/
+│   ├── index.html
+│   ├── static/
+│   │   ├── css/
+│   │   └── js/
+│   └── manifest.json
+├── package.json
+└── railway.json
+
+dinkr-api/                  # Deployed as its own container
+├── src/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── middleware/
+│   └── services/
+├── package.json
+└── railway.json
+```
+
+### 11.3 Railway Domain Configuration
+
+```
+# Custom domains in Railway dashboard
+
+Service: dinkr-website
+├── Custom Domain: dinkr.co
+└── Railway Domain: dinkr-website-production.up.railway.app
+
+Service: dinkr-webapp  
+├── Custom Domain: app.dinkr.co
+└── Railway Domain: dinkr-webapp-production.up.railway.app
+
+Service: dinkr-api
+├── Custom Domain: api.dinkr.co
+└── Railway Domain: dinkr-api-production.up.railway.app
+```
+
+### 11.4 Railway Environment Variables
+
+```
+# Set in Railway dashboard for each service
+
+dinkr-webapp:
+├── REACT_APP_API_URL=https://api.dinkr.co
+└── NODE_ENV=production
+
+dinkr-api:
+├── DATABASE_URL=postgresql://... (auto-injected by Railway)
+├── JWT_SECRET=🔲 FILL IN
+├── APPLE_CLIENT_ID=🔲 FILL IN
+├── GOOGLE_CLIENT_ID=🔲 FILL IN
+└── NODE_ENV=production
 ```
 
 ---
