@@ -143,7 +143,24 @@ The web properties (website + webapp) and mobile apps follow **separate deployme
 
 ---
 
-### FLOW 1: Website & Web App (Browser-Based)
+### HOSTING OPTIONS
+
+Choose **Option A (Azure)** for enterprise/complex needs, or **Option B (Railway)** for simplicity and faster setup.
+
+| Feature | Azure | Railway |
+|---------|-------|---------|
+| GitHub Integration | Requires DevOps setup | Native, 1-click |
+| Auto-deploy | Requires pipeline config | Built-in on every push |
+| Complexity | More complex | Very simple |
+| Pricing | Pay for resources | Pay for usage (~$5-20/mo) |
+| Scaling | Manual configuration | Automatic |
+| Best for | Enterprise, complex needs | Startups, MVPs, small teams |
+
+---
+
+## OPTION A: Azure Hosting
+
+### FLOW 1A: Website & Web App (Azure)
 
 **Repos:** `dinkr-website` and `dinkr-webapp`  
 **Hosting:** Azure App Service  
@@ -211,6 +228,7 @@ The web properties (website + webapp) and mobile apps follow **separate deployme
 ### FLOW 2: iOS & Android Mobile Apps (App Store Distribution)
 
 **Repo:** `dinkr-mobile` (React Native - single codebase for both platforms)  
+**CI/CD:** GitHub Actions (free) + Fastlane  
 **Testing:** TestFlight (iOS) + Google Play Internal Testing (Android)  
 **Production:** Fastlane → App Store + Google Play  
 
@@ -235,7 +253,7 @@ The web properties (website + webapp) and mobile apps follow **separate deployme
 │                         BETA TESTING                                     │
 │                                                                          │
 │  ┌─────────────────────────────────────────────────────────────────┐    │
-│  │                     Azure DevOps Pipeline                        │    │
+│  │                   GitHub Actions + Fastlane                      │    │
 │  │  • Triggered on push to `staging` branch                        │    │
 │  │  • Build iOS archive (.ipa)                                      │    │
 │  │  • Build Android bundle (.aab)                                   │    │
@@ -252,14 +270,14 @@ The web properties (website + webapp) and mobile apps follow **separate deployme
 │  ┌─────────────────────────┐     ┌─────────────────────────┐           │
 │  │      TestFlight         │     │  Google Play Internal   │           │
 │  │        (iOS)            │     │      Testing            │           │
-│  │                         │     │      (Android)          │           │
+│  │                         │     │                         │           │
 │  │  • Invite beta testers  │     │  • Invite beta testers  │           │
 │  │  • Test on real iPhones │     │  • Test on real Android │           │
 │  └─────────────────────────┘     └─────────────────────────┘           │
 │                                                                          │
 │  ✓ Team tests on physical devices                                       │
 │  ✓ QA approval required                                                 │
-│  ✓ Apps connect to staging.api.dinkr.co for testing                    │
+│  ✓ Apps connect to staging API for testing                             │
 └─────────────────────────────────────────────────────────────────────────┘
                                 │
                                 │ Merge to `main` branch (after approval)
@@ -268,7 +286,7 @@ The web properties (website + webapp) and mobile apps follow **separate deployme
 │                      APP STORE PRODUCTION                                │
 │                                                                          │
 │  ┌─────────────────────────────────────────────────────────────────┐    │
-│  │                     Azure DevOps Pipeline                        │    │
+│  │                   GitHub Actions + Fastlane                      │    │
 │  │  • Triggered on merge to `main` branch                          │    │
 │  │  • Build release versions                                        │    │
 │  │  • Run Fastlane release lanes                                    │    │
@@ -292,7 +310,7 @@ The web properties (website + webapp) and mobile apps follow **separate deployme
 │  └─────────────────────────┘     └─────────────────────────┘           │
 │                                                                          │
 │  ✓ LIVE - Users download from App Store / Google Play                   │
-│  ✓ Apps connect to api.dinkr.co (production)                           │
+│  ✓ Apps connect to production API                                       │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -380,7 +398,98 @@ DAY 6-8: Fully Live
 
 ---
 
-## 4. Web App - Complete Mapping
+## OPTION B: Railway Hosting (Simpler Alternative)
+
+### FLOW 1B: Website & Web App (Railway)
+
+**Repos:** `dinkr-website` and `dinkr-webapp`  
+**Hosting:** Railway  
+**No pipelines to configure** - Railway auto-detects and deploys.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         LOCAL DEVELOPMENT                                │
+│                                                                          │
+│  Developer works in:                                                     │
+│  • dinkr-website repo (marketing site)                                  │
+│  • dinkr-webapp repo (React app)                                        │
+│                                                                          │
+│  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐                │
+│  │   GitHub    │────▶│   Local     │────▶│   GitHub    │                │
+│  │   Clone     │     │   Dev       │     │   Push      │                │
+│  └─────────────┘     └─────────────┘     └─────────────┘                │
+└─────────────────────────────────────────────────────────────────────────┘
+                                │
+                                │ Push to `staging` branch
+                                ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                       RAILWAY STAGING                                    │
+│                                                                          │
+│  ┌─────────────────────────────────────────────────────────────────┐    │
+│  │                   Railway Auto-Deploy                            │    │
+│  │  • Detects push to `staging` branch                             │    │
+│  │  • Auto-detects React/Node                                       │    │
+│  │  • Builds and deploys automatically                              │    │
+│  │  • No pipeline configuration needed                              │    │
+│  └─────────────────────────────────────────────────────────────────┘    │
+│                                                                          │
+│  ┌─────────────────────────────────┐  ┌─────────────────────────────┐   │
+│  │  dinkr-website-staging.         │  │  dinkr-webapp-staging.      │   │
+│  │  up.railway.app                 │  │  up.railway.app             │   │
+│  └─────────────────────────────────┘  └─────────────────────────────┘   │
+│                                                                          │
+│  ✓ Team tests in browser                                                │
+│  ✓ QA approval required                                                 │
+└─────────────────────────────────────────────────────────────────────────┘
+                                │
+                                │ Merge to `main` branch (after approval)
+                                ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      RAILWAY PRODUCTION                                  │
+│                                                                          │
+│  ┌─────────────────────────────────────────────────────────────────┐    │
+│  │                   Railway Auto-Deploy                            │    │
+│  │  • Detects merge to `main` branch                               │    │
+│  │  • Builds production bundle                                      │    │
+│  │  • Deploys to production environment                             │    │
+│  │  • Custom domain support                                         │    │
+│  └─────────────────────────────────────────────────────────────────┘    │
+│                                                                          │
+│  ┌─────────────────────┐     ┌─────────────────────┐                    │
+│  │     dinkr.co        │     │   dinkr.co/webapp   │                    │
+│  │  (Custom Domain)    │     │  (Custom Domain)    │                    │
+│  └─────────────────────┘     └─────────────────────┘                    │
+│                                                                          │
+│  ✓ LIVE - Users access via browser                                      │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Railway Setup (One-Time)
+
+```
+1. Go to railway.app → Connect GitHub
+2. Select repo (dinkr-website or dinkr-webapp)
+3. Railway auto-detects React
+4. Set environment variables if needed
+5. Deploy → Get URL
+6. Add custom domain (dinkr.co)
+```
+
+### Railway Resources
+
+| Service | Purpose | Est. Cost |
+|---------|---------|-----------|
+| Railway (Website) | Host dinkr.co | ~$5/mo |
+| Railway (WebApp) | Host dinkr.co/webapp | ~$5/mo |
+| Railway (API) | Host api.dinkr.co | ~$10/mo |
+| Railway (PostgreSQL) | Database | ~$5/mo |
+| **Total** | | **~$25/mo** |
+
+---
+
+## MOBILE APPS (Works with Azure OR Railway)
+
+Mobile apps just need an API URL to connect to - works with either hosting option.
 
 ### 4.1 Login/Authentication Screen
 
@@ -606,6 +715,88 @@ The persistent navigation bar at the bottom of all screens.
 [ ] Waitlist functionality
 [ ] Game chat/messaging
 [ ] Weather integration
+[ ] Other: ________________
+```
+
+---
+
+#### Active Play Screen (`/play/:gameId`)
+
+**Purpose:** Live scoring interface during active game play. Shows court layout with player positions and real-time score tracking.
+
+**Triggered from:** "Play Game" button on confirmed game card
+
+| Element | Purpose |
+|---------|---------|
+| Header Bar | Court layout icon, Switch sides icon, END button |
+| Match Counter | "MATCH 1 of 3" - current match in series |
+| Court Layout | Visual pickleball court with player positions |
+| Score Display | Large score boxes for each team |
+| Result Text | "Todd & Jordan beat Steve & Dan" |
+| Submit Scores Button | Finalize match and calculate ratings |
+| View Scores Link | See detailed score breakdown |
+
+**Court Layout Visual:**
+```
+┌─────────────────────────────────────────┐
+│                                         │
+│   ┌─────────────┐   │   ┌─────────────┐ │
+│   │             │   │   │             │ │
+│   │    Todd     │   │   │    Steve    │ │
+│   │             │   │   │             │ │
+│   ├─────────────┤   │   ├─────────────┤ │
+│   │             │   │   │             │ │
+│   │   Jordan    │   │   │     Dan     │ │
+│   │             │   │   │             │ │
+│   └─────────────┘   │   └─────────────┘ │
+│                     │                   │
+│        TEAM A       │      TEAM B       │
+│                     │                   │
+│       [ 11 ]        │       [ 7 ]       │
+│                                         │
+│     Todd & Jordan beat Steve & Dan      │
+│                                         │
+│         [ Submit Scores ]               │
+│                                         │
+│            View Scores                  │
+└─────────────────────────────────────────┘
+```
+
+**Player Position Cards:**
+| Element | Purpose |
+|---------|---------|
+| Player Name | Display name on court position |
+| Background Color | Team A (left) vs Team B (right) |
+| Position | Top = back court, Bottom = front court |
+| Avatar (optional) | Player photo in position |
+
+**Score Controls:**
+| Element | Purpose |
+|---------|---------|
+| Team A Score Box | Tap to increment Team A score |
+| Team B Score Box | Tap to increment Team B score |
+| Score Color | Winning team highlighted (e.g., gold vs green) |
+
+**Header Actions:**
+| Icon | Purpose |
+|------|---------|
+| Court Layout | Toggle court view options |
+| Switch Sides | Swap team positions on court |
+| END Button | End game early / forfeit |
+
+**Match Series:**
+| Element | Purpose |
+|---------|---------|
+| Match Counter | Shows current match (e.g., "1 of 3") |
+| Dots Indicator | Visual progress through series |
+
+🔲 **FILL IN:** Additional play screen features needed?
+```
+[ ] Rally counter
+[ ] Timeout button
+[ ] Serve indicator
+[ ] Side-out tracking
+[ ] Watch app sync
 [ ] Other: ________________
 ```
 
