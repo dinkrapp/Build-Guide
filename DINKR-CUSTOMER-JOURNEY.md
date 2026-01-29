@@ -1,5 +1,5 @@
 # DiNKR Customer Journey & Technical Architecture
-## Living Wireframe Document v1.0
+## Wireframe Document v1.0
 
 > **Purpose:** This document maps out the complete DiNKR ecosystem - what exists, what each element does, and what needs to be built. Use this as your single source of truth for development.
 >
